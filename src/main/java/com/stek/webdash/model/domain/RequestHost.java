@@ -1,4 +1,4 @@
-package com.stek.webdash.model;
+package com.stek.webdash.model.domain;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class RequestHost {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 
 	@Column(unique = true)
 	private String ipAddress;

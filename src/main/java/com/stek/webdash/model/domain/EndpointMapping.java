@@ -1,4 +1,4 @@
-package com.stek.webdash.model;
+package com.stek.webdash.model.domain;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class EndpointMapping {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 
 	private String requestUri;
 

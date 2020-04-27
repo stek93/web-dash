@@ -1,4 +1,4 @@
-package com.stek.webdash.controller.validation;
+package com.stek.webdash.exception;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;

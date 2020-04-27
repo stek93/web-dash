@@ -1,7 +1,6 @@
 package com.stek.webdash.core;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,14 +11,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.ServletWebRequest;
 
-import com.blueconic.browscap.BrowsCapField;
 import com.blueconic.browscap.Capabilities;
 import com.blueconic.browscap.ParseException;
 import com.blueconic.browscap.UserAgentParser;
-import com.blueconic.browscap.UserAgentService;
-import com.stek.webdash.model.EndpointMapping;
-import com.stek.webdash.model.RequestDetails;
-import com.stek.webdash.model.RequestHost;
+import com.stek.webdash.model.domain.EndpointMapping;
+import com.stek.webdash.model.domain.RequestDetails;
+import com.stek.webdash.model.domain.RequestHost;
 import com.stek.webdash.service.EndpointMappingService;
 import com.stek.webdash.service.RequestDetailsService;
 import com.stek.webdash.service.RequestHostService;
@@ -38,14 +35,14 @@ public class RequestInspector {
 
 	private final EndpointMappingService endpointMappingService;
 
-	private final BrowsCapField[] userAgentFieldsForInspection = { BrowsCapField.BROWSER, BrowsCapField.BROWSER_TYPE, BrowsCapField.BROWSER_MAJOR_VERSION, BrowsCapField.DEVICE_TYPE,
-			BrowsCapField.PLATFORM, BrowsCapField.PLATFORM_VERSION };
+	private final UserAgentParser userAgentParser;
 
 	@Autowired
-	public RequestInspector(RequestHostService requestHostService, RequestDetailsService requestDetailsService, EndpointMappingService endpointMappingService) {
+	public RequestInspector(RequestHostService requestHostService, RequestDetailsService requestDetailsService, EndpointMappingService endpointMappingService, UserAgentParser userAgentParser) {
 		this.requestHostService = requestHostService;
 		this.requestDetailsService = requestDetailsService;
 		this.endpointMappingService = endpointMappingService;
+		this.userAgentParser = userAgentParser;
 	}
 
 	public void interceptClientRequest(ServletWebRequest webRequest, HttpStatus httpStatus, Exception ex) {
@@ -79,7 +76,6 @@ public class RequestInspector {
 	}
 
 	private void inspectRequest(String userAgent, String requestHttpMethod, String requestURI, int responseCode, Exception ex) throws IOException, ParseException {
-		final UserAgentParser userAgentParser = new UserAgentService().loadParser(Arrays.asList(userAgentFieldsForInspection));
 		final RequestDetails requestDetails;
 
 		if (userAgent == null) {

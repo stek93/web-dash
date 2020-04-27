@@ -3,6 +3,7 @@ package com.stek.webdash.service;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -10,10 +11,11 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.stek.webdash.model.RequestHost;
-import com.stek.webdash.model.RequestsDetailsMapper;
-import com.stek.webdash.model.response.IpApiResponse;
+import com.stek.webdash.model.domain.RequestHost;
+import com.stek.webdash.model.ui.IpApiResponse;
+import com.stek.webdash.model.ui.RequestHostDto;
 import com.stek.webdash.service.repository.RequestHostRepository;
+import com.stek.webdash.util.mapper.RequestHostsMapper;
 
 @Service
 public class RequestHostServiceImpl implements RequestHostService {
@@ -24,13 +26,13 @@ public class RequestHostServiceImpl implements RequestHostService {
 
 	private final RequestHostRepository requestHostRepository;
 	private final RestTemplate restTemplate;
-	private final RequestsDetailsMapper requestsDetailsMapper;
+	private final RequestHostsMapper requestHostsMapper;
 
 	@Autowired
-	public RequestHostServiceImpl(RequestHostRepository requestHostRepository, RestTemplateBuilder restTemplateBuilder, RequestsDetailsMapper requestsDetailsMapper) {
+	public RequestHostServiceImpl(RequestHostRepository requestHostRepository, RestTemplateBuilder restTemplateBuilder, RequestHostsMapper requestHostsMapper) {
 		this.requestHostRepository = requestHostRepository;
 		this.restTemplate = restTemplateBuilder.build();
-		this.requestsDetailsMapper = requestsDetailsMapper;
+		this.requestHostsMapper = requestHostsMapper;
 	}
 
 	@Override
@@ -39,13 +41,13 @@ public class RequestHostServiceImpl implements RequestHostService {
 	}
 
 	@Override
-	public List<RequestHost> findAllRequestHosts() {
-		return requestHostRepository.findAll();
+	public List<RequestHostDto> findAllRequestHosts() {
+		return requestHostRepository.findAll().stream().map(requestHostsMapper::entityToDto).collect(Collectors.toList());
 	}
 
 	@Override
-	public Optional<RequestHost> findRequestHostById(Integer id) {
-		return requestHostRepository.findById(id);
+	public Optional<RequestHostDto> findRequestHostById(Long id) {
+		return requestHostRepository.findById(id).map(requestHostsMapper::entityToDto);
 	}
 
 	@Override
@@ -69,6 +71,11 @@ public class RequestHostServiceImpl implements RequestHostService {
 
 	@Override
 	public RequestHost ipApiResponseToRequestHost(IpApiResponse ipApiResponse) {
-		return requestsDetailsMapper.toEntity(ipApiResponse);
+		return requestHostsMapper.ipApiResponseToEntity(ipApiResponse);
+	}
+
+	@Override
+	public RequestHostsMapper getMapper() {
+		return requestHostsMapper;
 	}
 }

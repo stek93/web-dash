@@ -1,4 +1,6 @@
-package com.stek.webdash.model;
+package com.stek.webdash.model.domain;
+
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +12,6 @@ import javax.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -19,12 +20,11 @@ import lombok.Setter;
 @Setter
 @Data
 @EqualsAndHashCode
-@NoArgsConstructor
 public class RequestDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 
 	private String browser;
 
@@ -56,13 +56,20 @@ public class RequestDetails {
 
 	private String response;
 
+	private LocalDateTime timestamp;
+
 	@ManyToOne
 	private RequestHost requestHost;
 
 	@ManyToOne
 	private EndpointMapping endpointHit;
 
+	public RequestDetails() {
+		this.timestamp = LocalDateTime.now();
+	}
+
 	public RequestDetails(String browser, String browserType, String browserMajorVersion, String deviceType, String platform, String platformVersion) {
+		this();
 		this.browser = browser;
 		this.browserType = browserType;
 		this.browserMajorVersion = browserMajorVersion;

@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
-import com.stek.webdash.controller.validation.CustomAsyncExceptionHandler;
+import com.stek.webdash.exception.CustomAsyncExceptionHandler;
 
 @Configuration
 @EnableAsync
@@ -30,4 +30,5 @@ public class AsyncConfiguration implements AsyncConfigurer {
 	public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
 		return new CustomAsyncExceptionHandler();
 	}
+
 }

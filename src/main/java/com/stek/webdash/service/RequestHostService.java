@@ -4,16 +4,18 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
-import com.stek.webdash.model.RequestHost;
-import com.stek.webdash.model.response.IpApiResponse;
+import com.stek.webdash.model.domain.RequestHost;
+import com.stek.webdash.model.ui.IpApiResponse;
+import com.stek.webdash.model.ui.RequestHostDto;
+import com.stek.webdash.util.mapper.RequestHostsMapper;
 
 public interface RequestHostService {
 
 	RequestHost saveRequestHost(RequestHost requestHost);
 
-	List<RequestHost> findAllRequestHosts();
+	List<RequestHostDto> findAllRequestHosts();
 
-	Optional<RequestHost> findRequestHostById(Integer id);
+	Optional<RequestHostDto> findRequestHostById(Long id);
 
 	void deleteRequestHost(RequestHost requestHost);
 
@@ -22,4 +24,7 @@ public interface RequestHostService {
 	Optional<RequestHost> findByIpAddress(String ipAddress);
 
 	RequestHost ipApiResponseToRequestHost(IpApiResponse ipApiResponse);
+
+	RequestHostsMapper getMapper();
+
 }

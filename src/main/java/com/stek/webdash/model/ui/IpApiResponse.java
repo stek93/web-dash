@@ -1,4 +1,4 @@
-package com.stek.webdash.model.response;
+package com.stek.webdash.model.ui;
 
 import lombok.Data;
 

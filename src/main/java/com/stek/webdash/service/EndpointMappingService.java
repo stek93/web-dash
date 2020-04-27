@@ -3,7 +3,7 @@ package com.stek.webdash.service;
 import java.util.Optional;
 import java.util.Set;
 
-import com.stek.webdash.model.EndpointMapping;
+import com.stek.webdash.model.domain.EndpointMapping;
 
 public interface EndpointMappingService {
 
@@ -11,7 +11,7 @@ public interface EndpointMappingService {
 
 	Set<EndpointMapping> findAllEndpointMappings();
 
-	Optional<EndpointMapping> findEndpointMappingById(Integer id);
+	Optional<EndpointMapping> findEndpointMappingById(Long id);
 
 	void deleteEndpointMapping(EndpointMapping endpointMapping);
 

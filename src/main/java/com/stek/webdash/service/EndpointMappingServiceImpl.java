@@ -7,7 +7,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.stek.webdash.model.EndpointMapping;
+import com.stek.webdash.model.domain.EndpointMapping;
 import com.stek.webdash.service.repository.EndpointMappingRepository;
 
 @Service
@@ -31,7 +31,7 @@ public class EndpointMappingServiceImpl implements EndpointMappingService {
 	}
 
 	@Override
-	public Optional<EndpointMapping> findEndpointMappingById(Integer id) {
+	public Optional<EndpointMapping> findEndpointMappingById(Long id) {
 		return endpointMappingRepository.findById(id);
 	}
 

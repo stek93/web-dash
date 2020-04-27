@@ -8,7 +8,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-	private final String ANT_PATTERN_REQUESTS_LOGGER = "/requests-logger/**";
+	// TODO: read context path from .properties file
+	private final String ANT_PATTERN_REQUESTS_LOGGER = "/inspector/requests/**";
 
 	private final RequestInfoInterceptor requestInfoInterceptor;
 

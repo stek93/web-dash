@@ -10,7 +10,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import com.stek.webdash.model.EndpointMapping;
+import com.stek.webdash.model.domain.EndpointMapping;
 import com.stek.webdash.service.EndpointMappingService;
 
 @Component
